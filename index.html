@@ -1,150 +1,173 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<title>Faanzy Cloud – File Storage & Sharing</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE2IDJMMyA5TDMgMjNMMTYgMzBMMjkgMjNMMjkgOUwxNiAyWiIgZmlsbD0iIzAwOTFmZiIvPgo8L3N2Zz4K">
-<style>
-:root{--blue:#0091ff;--dark:#141823;--grey:#f7f9fc;--border:#e5e8ed}
-*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto}
-body{background:#fff;color:var(--dark)}
-header{background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;padding:12px 28px}
-.logo{display:flex;align-items:center;font-size:22px;font-weight:700;color:var(--blue)}
-.logo img{height:32px;margin-right:8px}
-nav{margin-left:auto;font-size:14px;color:#555}
-main{max-width:1100px;margin:30px auto;padding:0 20px}
-.toolbar{background:var(--grey);padding:14px 20px;border-radius:8px;display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;font-size:14px}
-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden}
-thead{background:var(--grey);font-weight:600;font-size:14px}
-th,td{padding:14px 18px;text-align:left;font-size:14px}
-tbody tr:hover{background:#f2f6ff}
-.fileName{display:flex;align-items:center}
-.fileIcon{width:36px;height:36px;margin-right:12px}
-.btnDownload{background:var(--blue);color:#fff;border:none;padding:8px 18px;border-radius:6px;font-size:13px;cursor:pointer;font-weight:600}
-.btnDownload:disabled{background:#ccc;cursor:not-allowed}
-/* popup */
-.popupBg{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;z-index:9999;animation:fadeIn .3s ease}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.popupCard{background:#fff;border-radius:16px;padding:40px 50px;max-width:420px;text-align:center;box-shadow:0 16px 40px rgba(0,0,0,.25);animation:slideUp .4s ease}
-@keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
-.popupCard h3{font-size:24px;margin-bottom:10px;color:var(--dark)}
-.popupCard p{font-size:14px;color:#444;margin-bottom:25px}
-.task{display:flex;align-items:center;margin:12px 0;font-size:14px}
-.task input{margin-right:10px;transform:scale(1.2)}
-.task a{color:var(--blue);text-decoration:none;font-weight:600}
-.task a:hover{text-decoration:underline}
-.unlockBtn{background:var(--blue);color:#fff;border:none;padding:10px 28px;border-radius:8px;font-size:15px;cursor:pointer;font-weight:700;margin-top:15px}
-.unlockBtn:disabled{background:#ccc}
-.hidden{display:none}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FaanzyCloud - File Hosting</title>
+  <link rel="icon" href="https://www.mediafire.com/images/icons/favicon.ico">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #f0f2f5;
+      color: #333;
+    }
+
+    header {
+      background: #0070eb;
+      color: white;
+      padding: 1rem 2rem;
+      font-size: 1.4rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+    }
+
+    header img {
+      width: 28px;
+      height: 28px;
+      margin-right: 10px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 2rem auto;
+      background: white;
+      border-radius: 10px;
+      padding: 2rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+
+    .file {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .file-name {
+      font-weight: 500;
+    }
+
+    .file button {
+      background: #0070eb;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 8px 16px;
+      cursor: not-allowed;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .file button.active {
+      cursor: pointer;
+      background: #0070eb;
+    }
+
+    .follow-buttons {
+      margin-top: 1.5rem;
+    }
+
+    .follow-buttons button {
+      margin: 0.3rem;
+      padding: 10px 16px;
+      font-size: 14px;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .ig { background: #e1306c; }
+    .yt { background: #ff0000; }
+    .wa { background: #25d366; }
+
+    footer {
+      text-align: center;
+      margin-top: 2rem;
+      color: #777;
+    }
+  </style>
 </head>
 <body>
+
 <header>
-  <div class="logo">
-    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIwIDJMNSAxMUw1IDI5TDIwIDM4TDM1IDI5TDM1IDExTDIwIDJaIiBmaWxsPSIjMDA5MWZmIi8+CjxwYXRoIGQ9Ik0yMCAxMFYxOEwyNiAyMkwyMCAxMFoiIGZpbGw9IiNmZmYiLz4KPHBhdGggZD0iTTE0IDIwTDIwIDEwTDIwIDMwTDE0IDIwWiIgZmlsbD0iI2ZmZiIvPgo8L3N2Zz4K" alt="">
-    Faanzy Cloud
-  </div>
-  <nav>My Files</nav>
+  <img src="https://www.mediafire.com/images/icons/favicon.ico" alt="icon">
+  FaanzyCloud File Download
 </header>
 
-<main>
-  <div class="toolbar">
-    <span>Your uploaded files</span>
-    <small>Upload via GitHub → folder <strong>/files</strong></small>
-  </div>
+<div class="container">
+  <h2>📂 File List</h2>
+  <div id="fileList">Loading files...</div>
 
-  <table>
-    <thead>
-      <tr>
-        <th width="50%">Name</th>
-        <th width="15%">Size</th>
-        <th width="20%">Upload Date</th>
-        <th width="15%">Download</th>
-      </tr>
-    </thead>
-    <tbody id="tbody"></tbody>
-  </table>
-</main>
-
-<!-- POPUP LOCK -->
-<div id="popup" class="popupBg hidden">
-  <div class="popupCard">
-    <h3>🔓 Unlock File</h3>
-    <p>Selesaikan semua tugas untuk membuka tombol download:</p>
-
-    <div class="task">
-      <input type="checkbox" id="ig">
-      <label><a href="https://instagram.com/USERNAME_IG" target="_blank">Follow Instagram</a></label>
-    </div>
-    <div class="task">
-      <input type="checkbox" id="wa">
-      <label><a href="https://whatsapp.com/channel/USERNAME_WA" target="_blank">Join Channel WhatsApp</a></label>
-    </div>
-    <div class="task">
-      <input type="checkbox" id="yt">
-      <label><a href="https://youtube.com/@USERNAME_YT?sub_confirmation=1" target="_blank">Subscribe YouTube</a></label>
-    </div>
-
-    <button id="unlockBtn" class="unlockBtn" disabled>Download</button>
+  <div class="follow-buttons">
+    <p><strong>🔓 Untuk mengunduh, ikuti semua sosial di bawah:</strong></p>
+    <button class="ig" onclick="openFollow('ig')">📷 Instagram</button>
+    <button class="yt" onclick="openFollow('yt')">▶️ YouTube</button>
+    <button class="wa" onclick="openFollow('wa')">💬 WhatsApp</button>
   </div>
 </div>
 
+<footer>© 2025 FaanzyCloud - Powered by GitHub & Faanzy Market</footer>
+
 <script>
-const OWNER = 'faanzylosttt'; // GANTI
-const REPO  = 'faanzy-cloud';
-const PATH  = 'files';
+  const username = "username"; // Ganti dengan username GitHub kamu
+  const repo = "faanzy-cloud";
 
-let downloadUrl = '';
+  const follows = {
+    ig: false,
+    yt: false,
+    wa: false
+  };
 
-// Load daftar file otomatis
-fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${PATH}`)
-  .then(r=>r.json())
-  .then(data=>{
-    const rows = data.filter(f=>f.type==='file').map(f=>{
-      const kb = (f.size/1024);
-      const size = kb>1024 ? (kb/1024).toFixed(2)+' MB' : kb.toFixed(1)+' KB';
-      const date = new Date().toLocaleDateString('id-ID');
-      return `
-        <tr>
-          <td class="fileName">
-            <img class="fileIcon" src="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome/svgs/solid/file.svg">
-            ${f.name}
-          </td>
-          <td>${size}</td>
-          <td>${date}</td>
-          <td><button class="btnDownload" onclick="showUnlock('${f.download_url}')">Download</button></td>
-        </tr>`;
-    }).join('');
-    document.getElementById('tbody').innerHTML = rows;
-  });
+  async function fetchFiles() {
+    const fileListEl = document.getElementById("fileList");
+    try {
+      const res = await fetch(`https://api.github.com/repos/${faanzylosttt}/${repo}/contents/files`);
+      const files = await res.json();
 
-function showUnlock(url){
-  downloadUrl = url;
-  document.getElementById('popup').classList.remove('hidden');
-  updateBtn();
-}
+      fileListEl.innerHTML = "";
 
-// cek checklist & enable/disable tombol
-function updateBtn(){
-  const ig = document.getElementById('ig').checked;
-  const wa = document.getElementById('wa').checked;
-  const yt = document.getElementById('yt').checked;
-  const btn = document.getElementById('unlockBtn');
-  const allDone = ig && wa && yt;
-  btn.disabled = !allDone;
-}
+      files.forEach(file => {
+        if (file.type === "file") {
+          const el = document.createElement("div");
+          el.className = "file";
+          el.innerHTML = `
+            <div class="file-name">${file.name}</div>
+            <button disabled data-url="${file.download_url}">Download</button>
+          `;
+          fileListEl.appendChild(el);
+        }
+      });
+    } catch (err) {
+      fileListEl.innerHTML = "Gagal memuat daftar file.";
+    }
+  }
 
-// listener checkbox
-['ig','wa','yt'].forEach(id=>{
-  document.getElementById(id).addEventListener('change', updateBtn);
-});
+  function openFollow(platform) {
+    if (platform === "ig") window.open("https://instagram.com/akunmu", "_blank");
+    if (platform === "yt") window.open("https://youtube.com/@channelmu", "_blank");
+    if (platform === "wa") window.open("https://wa.me/628xxxx", "_blank");
 
-// action download
-document.getElementById('unlockBtn').addEventListener('click', ()=>{
-  document.getElementById('popup').classList.add('hidden');
-  window.location.href = downloadUrl;
-});
+    follows[platform] = true;
+    checkUnlock();
+  }
+
+  function checkUnlock() {
+    if (follows.ig && follows.yt && follows.wa) {
+      document.querySelectorAll("button[data-url]").forEach(btn => {
+        btn.disabled = false;
+        btn.classList.add("active");
+        btn.onclick = () => window.open(btn.dataset.url, "_blank");
+      });
+    }
+  }
+
+  fetchFiles();
 </script>
+
 </body>
 </html>
