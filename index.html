@@ -22,17 +22,20 @@ tbody tr:hover{background:#f2f6ff}
 .fileName{display:flex;align-items:center}
 .fileIcon{width:36px;height:36px;margin-right:12px}
 .btnDownload{background:var(--blue);color:#fff;border:none;padding:8px 18px;border-radius:6px;font-size:13px;cursor:pointer;font-weight:600}
-.btnDownload:hover{background:#0080e6}
 .btnDownload:disabled{background:#ccc;cursor:not-allowed}
 /* popup */
-.popupBg{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;z-index:9999}
-.popupCard{background:#fff;border-radius:12px;padding:40px 50px;max-width:420px;text-align:center;box-shadow:0 12px 30px rgba(0,0,0,.35)}
+.popupBg{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;z-index:9999;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.popupCard{background:#fff;border-radius:16px;padding:40px 50px;max-width:420px;text-align:center;box-shadow:0 16px 40px rgba(0,0,0,.25);animation:slideUp .4s ease}
+@keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
 .popupCard h3{font-size:24px;margin-bottom:10px;color:var(--dark)}
 .popupCard p{font-size:14px;color:#444;margin-bottom:25px}
-.socialBtns{display:flex;gap:14px;justify-content:center;margin-bottom:30px}
-.socialBtns a{background:#f2f2f2;border-radius:8px;padding:12px 18px;font-size:13px;color:#222;text-decoration:none;font-weight:600;transition:.2s}
-.socialBtns a:hover{background:#e5e5e5}
-.unlockBtn{background:var(--blue);color:#fff;border:none;padding:10px 28px;border-radius:8px;font-size:15px;cursor:pointer;font-weight:700}
+.task{display:flex;align-items:center;margin:12px 0;font-size:14px}
+.task input{margin-right:10px;transform:scale(1.2)}
+.task a{color:var(--blue);text-decoration:none;font-weight:600}
+.task a:hover{text-decoration:underline}
+.unlockBtn{background:var(--blue);color:#fff;border:none;padding:10px 28px;border-radius:8px;font-size:15px;cursor:pointer;font-weight:700;margin-top:15px}
+.unlockBtn:disabled{background:#ccc}
 .hidden{display:none}
 </style>
 </head>
@@ -67,19 +70,28 @@ tbody tr:hover{background:#f2f6ff}
 <!-- POPUP LOCK -->
 <div id="popup" class="popupBg hidden">
   <div class="popupCard">
-    <h3>🔒 Unlock File</h3>
-    <p>Silakan follow/join semua channel di bawah, lalu klik tombol "Download".</p>
-    <div class="socialBtns">
-      <a href="https://instagram.com/USERNAME_IG" target="_blank">Follow IG</a>
-      <a href="https://whatsapp.com/channel/USERNAME_WA" target="_blank">Join WA</a>
-      <a href="https://youtube.com/@USERNAME_YT?sub_confirmation=1" target="_blank">Subscribe YouTube</a>
+    <h3>🔓 Unlock File</h3>
+    <p>Selesaikan semua tugas untuk membuka tombol download:</p>
+
+    <div class="task">
+      <input type="checkbox" id="ig">
+      <label><a href="https://instagram.com/USERNAME_IG" target="_blank">Follow Instagram</a></label>
     </div>
-    <button class="unlockBtn" onclick="unlockNow()">Download</button>
+    <div class="task">
+      <input type="checkbox" id="wa">
+      <label><a href="https://whatsapp.com/channel/USERNAME_WA" target="_blank">Join Channel WhatsApp</a></label>
+    </div>
+    <div class="task">
+      <input type="checkbox" id="yt">
+      <label><a href="https://youtube.com/@USERNAME_YT?sub_confirmation=1" target="_blank">Subscribe YouTube</a></label>
+    </div>
+
+    <button id="unlockBtn" class="unlockBtn" disabled>Download</button>
   </div>
 </div>
 
 <script>
-const OWNER = 'faanzylosttt'; // ganti
+const OWNER = 'faanzylosttt'; // GANTI
 const REPO  = 'faanzy-cloud';
 const PATH  = 'files';
 
@@ -110,13 +122,29 @@ fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${PATH}`)
 function showUnlock(url){
   downloadUrl = url;
   document.getElementById('popup').classList.remove('hidden');
+  updateBtn();
 }
-function unlockNow(){
-  // simpan status unlock di localStorage (opsional)
-  localStorage.setItem('unlocked', '1');
+
+// cek checklist & enable/disable tombol
+function updateBtn(){
+  const ig = document.getElementById('ig').checked;
+  const wa = document.getElementById('wa').checked;
+  const yt = document.getElementById('yt').checked;
+  const btn = document.getElementById('unlockBtn');
+  const allDone = ig && wa && yt;
+  btn.disabled = !allDone;
+}
+
+// listener checkbox
+['ig','wa','yt'].forEach(id=>{
+  document.getElementById(id).addEventListener('change', updateBtn);
+});
+
+// action download
+document.getElementById('unlockBtn').addEventListener('click', ()=>{
   document.getElementById('popup').classList.add('hidden');
   window.location.href = downloadUrl;
-}
+});
 </script>
 </body>
 </html>
