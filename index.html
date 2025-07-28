@@ -1,173 +1,156 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>FaanzyCloud - File Hosting</title>
-  <link rel="icon" href="https://www.mediafire.com/images/icons/favicon.ico">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: #f0f2f5;
-      color: #333;
-    }
-
-    header {
-      background: #0070eb;
-      color: white;
-      padding: 1rem 2rem;
-      font-size: 1.4rem;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-    }
-
-    header img {
-      width: 28px;
-      height: 28px;
-      margin-right: 10px;
-    }
-
-    .container {
-      max-width: 800px;
-      margin: 2rem auto;
-      background: white;
-      border-radius: 10px;
-      padding: 2rem;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    }
-
-    .file {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px;
-      border-bottom: 1px solid #eee;
-    }
-
-    .file-name {
-      font-weight: 500;
-    }
-
-    .file button {
-      background: #0070eb;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      padding: 8px 16px;
-      cursor: not-allowed;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-
-    .file button.active {
-      cursor: pointer;
-      background: #0070eb;
-    }
-
-    .follow-buttons {
-      margin-top: 1.5rem;
-    }
-
-    .follow-buttons button {
-      margin: 0.3rem;
-      padding: 10px 16px;
-      font-size: 14px;
-      border: none;
-      border-radius: 6px;
-      color: white;
-      cursor: pointer;
-    }
-
-    .ig { background: #e1306c; }
-    .yt { background: #ff0000; }
-    .wa { background: #25d366; }
-
-    footer {
-      text-align: center;
-      margin-top: 2rem;
-      color: #777;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Faanzy Cloud – Ultra Premium</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE2IDJMMyA5TDMgMjNMMTYgMzBMMjkgMjNMMjkgOUwxNiAyWiIgZmlsbD0iIzAwOTFmZiIvPgo8L3N2Zz4K">
+<style>
+:root{--blue:#0091ff;--dark:#141823;--grey:#f7f9fc;--border:#e5e8ed}
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto}
+body{background:#fff;color:var(--dark)}
+header{background:linear-gradient(135deg,#0f0f11,#232526);display:flex;align-items:center;padding:18px 32px;box-shadow:0 4px 12px rgba(0,0,0,.25)}
+.logo{display:flex;align-items:center;font-size:26px;font-weight:800;color:var(--blue)}
+.logo img{height:36px;margin-right:10px}
+main{max-width:1120px;margin:50px auto;padding:0 25px}
+.toolbar{background:linear-gradient(135deg,#f1f4f9,#e0e7ff);padding:18px 25px;border-radius:12px;display:flex;justify-content:space-between;align-items:center;margin-bottom:35px;font-size:15px;font-weight:500}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.05)}
+thead{background:var(--blue);color:#fff;font-weight:600;font-size:15px}
+th,td{padding:18px 22px;text-align:left;font-size:15px}
+tbody tr:hover{transform:scale(1.01);transition:.15s}
+.fileName{display:flex;align-items:center}
+.fileIcon{width:44px;height:44px;margin-right:14px}
+.btnDownload{background:linear-gradient(135deg,var(--blue),#0077e5);color:#fff;border:none;padding:10px 22px;border-radius:8px;font-size:14px;cursor:pointer;font-weight:700;transition:.2s}
+.btnDownload:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,119,229,.5)}
+.btnDownload:disabled{background:#ccc;cursor:not-allowed}
+/* modal */
+.modalBg{position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;z-index:9999;animation:fadeIn .4s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modalBox{background:#fff;border-radius:20px;padding:50px 60px;max-width:480px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.25);animation:slideUp .5s ease}
+@keyframes slideUp{from{transform:translateY(60px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modalBox h3{font-size:28px;margin-bottom:12px;color:var(--dark)}
+.modalBox p{font-size:16px;color:#555;margin-bottom:25px}
+.socialBtns{display:flex;flex-direction:column;gap:12px;margin-bottom:30px}
+.socialBtn{display:flex;align-items:center;background:#f5f8ff;border:1px solid #dce4ff;border-radius:12px;padding:14px 18px;font-size:15px;color:var(--dark);text-decoration:none;font-weight:600;transition:.2s}
+.socialBtn:hover{background:#e0e8ff;transform:translateY(-2px)}
+.socialBtn .icon{width:26px;height:26px;margin-right:12px}
+.progressBar{height:6px;background:#e0e8ff;border-radius:3px;margin:20px 0;overflow:hidden}
+.progressBar div{height:100%;width:0;background:linear-gradient(90deg,var(--blue),#0077e5);transition:width .3s ease}
+.unlockBtn{background:linear-gradient(135deg,var(--blue),#0077e5);color:#fff;border:none;padding:12px 36px;border-radius:10px;font-size:16px;cursor:pointer;font-weight:700;transition:.2s}
+.unlockBtn:disabled{background:#ccc}
+.hidden{display:none}
+</style>
 </head>
 <body>
-
 <header>
-  <img src="https://www.mediafire.com/images/icons/favicon.ico" alt="icon">
-  FaanzyCloud File Download
+  <div class="logo">
+    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIwIDJMNSAxMUw1IDI5TDIwIDM4TDM1IDI5TDM1IDExTDIwIDJaIiBmaWxsPSIjMDA5MWZmIi8+CjxwYXRoIGQ9Ik0yMCAxMFYxOEwyNiAyMkwyMCAxMFoiIGZpbGw9IiNmZmYiLz4KPHBhdGggZD0iTTE0IDIwTDIwIDEwTDIwIDMwTDE0IDIwWiIgZmlsbD0iI2ZmZiIvPgo8L3N2Zz4K" alt="">
+    Faanzy Cloud
+  </div>
 </header>
 
-<div class="container">
-  <h2>📂 File List</h2>
-  <div id="fileList">Loading files...</div>
+<main>
+  <div class="toolbar">
+    <span>Your uploaded files</span>
+    <small>Upload via GitHub → folder <strong>/files</strong></small>
+  </div>
 
-  <div class="follow-buttons">
-    <p><strong>🔓 Untuk mengunduh, ikuti semua sosial di bawah:</strong></p>
-    <button class="ig" onclick="openFollow('ig')">📷 Instagram</button>
-    <button class="yt" onclick="openFollow('yt')">▶️ YouTube</button>
-    <button class="wa" onclick="openFollow('wa')">💬 WhatsApp</button>
+  <table>
+    <thead>
+      <tr>
+        <th width="50%">Name</th>
+        <th width="15%">Size</th>
+        <th width="20%">Upload Date</th>
+        <th width="15%">Download</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</main>
+
+<!-- MODAL LOCK -->
+<div id="modal" class="modalBg hidden">
+  <div class="modalBox">
+    <h3>🔓 Unlock File</h3>
+    <p>Selesaikan tugas berikut untuk mendapatkan akses download:</p>
+
+    <div class="socialBtns">
+      <a class="socialBtn" id="igLink" href="https://instagram.com/USERNAME_IG" target="_blank">
+        <img class="icon" src="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome/svgs/brands/instagram.svg">
+        <span>Follow Instagram</span>
+      </a>
+      <a class="socialBtn" id="waLink" href="https://whatsapp.com/channel/USERNAME_WA" target="_blank">
+        <img class="icon" src="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome/svgs/brands/whatsapp.svg">
+        <span>Join Channel WhatsApp</span>
+      </a>
+      <a class="socialBtn" id="ytLink" href="https://youtube.com/@USERNAME_YT?sub_confirmation=1" target="_blank">
+        <img class="icon" src="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome/svgs/brands/youtube.svg">
+        <span>Subscribe YouTube</span>
+      </a>
+    </div>
+
+    <div class="progressBar"><div id="progress"></div></div>
+    <button id="unlockBtn" class="unlockBtn" disabled>Download</button>
   </div>
 </div>
 
-<footer>© 2025 FaanzyCloud - Powered by GitHub & Faanzy Market</footer>
-
 <script>
-  const username = "username"; // Ganti dengan username GitHub kamu
-  const repo = "faanzy-cloud";
+const OWNER = 'faanzylosttt'; // ganti dengan username GitHub
+const REPO  = 'faanzy-cloud';
+const PATH  = 'files';
 
-  const follows = {
-    ig: false,
-    yt: false,
-    wa: false
-  };
+let downloadUrl = '';
 
-  async function fetchFiles() {
-    const fileListEl = document.getElementById("fileList");
-    try {
-      const res = await fetch(`https://api.github.com/repos/${faanzylosttt}/${repo}/contents/files`);
-      const files = await res.json();
+// load file list
+fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${PATH}`)
+  .then(r=>r.json())
+  .then(data=>{
+    const rows = data.filter(f=>f.type==='file').map(f=>{
+      const kb = f.size/1024;
+      const size = kb>1024 ? (kb/1024).toFixed(2)+' MB' : kb.toFixed(1)+' KB';
+      const date = new Date().toLocaleDateString('id-ID');
+      return `
+        <tr>
+          <td class="fileName">
+            <img class="fileIcon" src="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome/svgs/solid/file.svg">
+            ${f.name}
+          </td>
+          <td>${size}</td>
+          <td>${date}</td>
+          <td><button class="btnDownload" onclick="openModal('${f.download_url}')">Download</button></td>
+        </tr>`;
+    }).join('');
+    document.getElementById('tbody').innerHTML = rows;
+  });
 
-      fileListEl.innerHTML = "";
+function openModal(url){
+  downloadUrl = url;
+  document.getElementById('modal').classList.remove('hidden');
+  checkProgress();
+}
 
-      files.forEach(file => {
-        if (file.type === "file") {
-          const el = document.createElement("div");
-          el.className = "file";
-          el.innerHTML = `
-            <div class="file-name">${file.name}</div>
-            <button disabled data-url="${file.download_url}">Download</button>
-          `;
-          fileListEl.appendChild(el);
-        }
-      });
-    } catch (err) {
-      fileListEl.innerHTML = "Gagal memuat daftar file.";
+// progress counter
+let tasks = 0;
+function checkProgress(){
+  tasks = 0;
+  // dummy check (real: panggil API / serverless function)
+  // disini simulasi 3 detik
+  const interval = setInterval(()=>{
+    tasks+=1;
+    const progress = Math.min((tasks/3)*100,100);
+    document.getElementById('progress').style.width = progress+'%';
+    if(tasks>=3){
+      clearInterval(interval);
+      document.getElementById('unlockBtn').disabled = false;
     }
-  }
+  },1000);
+}
 
-  function openFollow(platform) {
-    if (platform === "ig") window.open("https://instagram.com/akunmu", "_blank");
-    if (platform === "yt") window.open("https://youtube.com/@channelmu", "_blank");
-    if (platform === "wa") window.open("https://wa.me/628xxxx", "_blank");
-
-    follows[platform] = true;
-    checkUnlock();
-  }
-
-  function checkUnlock() {
-    if (follows.ig && follows.yt && follows.wa) {
-      document.querySelectorAll("button[data-url]").forEach(btn => {
-        btn.disabled = false;
-        btn.classList.add("active");
-        btn.onclick = () => window.open(btn.dataset.url, "_blank");
-      });
-    }
-  }
-
-  fetchFiles();
+// unlock & download
+document.getElementById('unlockBtn').addEventListener('click',()=>{
+  document.getElementById('modal').classList.add('hidden');
+  window.location.href = downloadUrl;
+});
 </script>
-
 </body>
 </html>
