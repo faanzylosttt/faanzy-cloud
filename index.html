@@ -3,94 +3,96 @@
 <head>
 <meta charset="UTF-8">
 <title>Faanzy Cloud – File Storage & Sharing</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE2IDJMMyA5TDMgMjNMMTYgMzBMMjkgMjNMMjkgOUwxNiAyWiIgZmlsbD0iIzAwOTFmZiIvPgo8L3N2Zz4K">
 <style>
-:root{
-  --primary:#0091ff;
-  --secondary:#0066cc;
-  --grey:#f0f2f5;
-  --dark:#141823;
-}
-*{box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial}
-body{margin:0;background:#fff;color:var(--dark)}
-header{background:#fff;border-bottom:1px solid #e5e5e5;display:flex;align-items:center;padding:12px 24px}
-header img{height:40px;margin-right:10px}
-header span{font-size:20px;font-weight:700;color:var(--primary)}
-main{max-width:960px;margin:35px auto;padding:0 20px}
-.uploadBanner{background:var(--grey);border:1px dashed #bbb;border-radius:8px;padding:40px 20px;text-align:center;color:#555;font-size:16px}
-table{width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+:root{--blue:#0091ff;--dark:#141823;--grey:#f7f9fc;--border:#e5e8ed}
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto}
+body{background:#fff;color:var(--dark)}
+header{background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;padding:12px 28px}
+.logo{display:flex;align-items:center;font-size:22px;font-weight:700;color:var(--blue)}
+.logo img{height:32px;margin-right:8px}
+nav{margin-left:auto;font-size:14px;color:#555}
+main{max-width:1100px;margin:30px auto;padding:0 20px}
+.toolbar{background:var(--grey);padding:14px 20px;border-radius:8px;display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;font-size:14px}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden}
 thead{background:var(--grey);font-weight:600;font-size:14px}
 th,td{padding:14px 18px;text-align:left;font-size:14px}
-tbody tr:hover{background:#f9fafb}
+tbody tr:hover{background:#f2f6ff}
 .fileName{display:flex;align-items:center}
 .fileIcon{width:36px;height:36px;margin-right:12px}
-.btnDownload{background:var(--primary);color:#fff;border:none;padding:6px 14px;border-radius:4px;font-size:13px;cursor:pointer}
-.btnDownload:hover{background:var(--secondary)}
+.btnDownload{background:var(--blue);color:#fff;border:none;padding:8px 18px;border-radius:6px;font-size:13px;cursor:pointer;font-weight:600}
+.btnDownload:hover{background:#0080e6}
+.btnDownload:disabled{background:#ccc;cursor:not-allowed}
 /* popup */
 .popupBg{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;z-index:9999}
-.popupCard{background:#fff;border-radius:10px;padding:30px 35px;max-width:380px;text-align:center;box-shadow:0 8px 25px rgba(0,0,0,.3)}
-.popupCard h3{margin-top:0;font-size:20px;color:var(--dark)}
-.popupCard p{font-size:14px;color:#555;margin:8px 0 20px}
-.socialBtns{display:flex;gap:12px;justify-content:center;margin-bottom:20px}
-.socialBtns a{background:#f1f1f1;border-radius:6px;padding:10px 14px;font-size:13px;color:#222;text-decoration:none;font-weight:500}
+.popupCard{background:#fff;border-radius:12px;padding:40px 50px;max-width:420px;text-align:center;box-shadow:0 12px 30px rgba(0,0,0,.35)}
+.popupCard h3{font-size:24px;margin-bottom:10px;color:var(--dark)}
+.popupCard p{font-size:14px;color:#444;margin-bottom:25px}
+.socialBtns{display:flex;gap:14px;justify-content:center;margin-bottom:30px}
+.socialBtns a{background:#f2f2f2;border-radius:8px;padding:12px 18px;font-size:13px;color:#222;text-decoration:none;font-weight:600;transition:.2s}
 .socialBtns a:hover{background:#e5e5e5}
-.verifyBtn{background:var(--primary);color:#fff;border:none;padding:8px 22px;border-radius:5px;font-size:14px;cursor:pointer}
-.verifyBtn:hover{background:var(--secondary)}
+.unlockBtn{background:var(--blue);color:#fff;border:none;padding:10px 28px;border-radius:8px;font-size:15px;cursor:pointer;font-weight:700}
 .hidden{display:none}
 </style>
 </head>
 <body>
 <header>
-  <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIwIDJMNSAxMUw1IDI5TDIwIDM4TDM1IDI5TDM1IDExTDIwIDJaIiBmaWxsPSIjMDA5MWZmIi8+CjxwYXRoIGQ9Ik0yMCAxMFYxOEwyNiAyMkwyMCAxMFoiIGZpbGw9IiNmZmYiLz4KPHBhdGggZD0iTTE0IDIwTDIwIDEwTDIwIDMwTDE0IDIwWiIgZmlsbD0iI2ZmZiIvPgo8L3N2Zz4K" alt="logo">
-  <span>Faanzy Cloud</span>
+  <div class="logo">
+    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIwIDJMNSAxMUw1IDI5TDIwIDM4TDM1IDI5TDM1IDExTDIwIDJaIiBmaWxsPSIjMDA5MWZmIi8+CjxwYXRoIGQ9Ik0yMCAxMFYxOEwyNiAyMkwyMCAxMFoiIGZpbGw9IiNmZmYiLz4KPHBhdGggZD0iTTE0IDIwTDIwIDEwTDIwIDMwTDE0IDIwWiIgZmlsbD0iI2ZmZiIvPgo8L3N2Zz4K" alt="">
+    Faanzy Cloud
+  </div>
+  <nav>My Files</nav>
 </header>
 
 <main>
-  <div class="uploadBanner">
-    Drag & drop files here or upload via GitHub → folder <strong>files/</strong>
+  <div class="toolbar">
+    <span>Your uploaded files</span>
+    <small>Upload via GitHub → folder <strong>/files</strong></small>
   </div>
 
   <table>
-    <thead><tr>
-      <th width="55%">Name</th>
-      <th width="15%">Size</th>
-      <th width="20%">Uploaded</th>
-      <th width="10%">Download</th>
-    </tr></thead>
+    <thead>
+      <tr>
+        <th width="50%">Name</th>
+        <th width="15%">Size</th>
+        <th width="20%">Upload Date</th>
+        <th width="15%">Download</th>
+      </tr>
+    </thead>
     <tbody id="tbody"></tbody>
   </table>
 </main>
 
-<!-- POPUP UNLOCK -->
+<!-- POPUP LOCK -->
 <div id="popup" class="popupBg hidden">
   <div class="popupCard">
     <h3>🔒 Unlock File</h3>
-    <p>Selesaikan tugas berikut untuk melanjutkan download:</p>
+    <p>Silakan follow/join semua channel di bawah, lalu klik tombol "Download".</p>
     <div class="socialBtns">
       <a href="https://instagram.com/USERNAME_IG" target="_blank">Follow IG</a>
       <a href="https://whatsapp.com/channel/USERNAME_WA" target="_blank">Join WA</a>
-      <a href="https://youtube.com/@USERNAME_YT?sub_confirmation=1" target="_blank">Subs YouTube</a>
+      <a href="https://youtube.com/@USERNAME_YT?sub_confirmation=1" target="_blank">Subscribe YouTube</a>
     </div>
-    <button class="verifyBtn" onclick="unlockNow()">Saya sudah selesai → Download</button>
+    <button class="unlockBtn" onclick="unlockNow()">Download</button>
   </div>
 </div>
 
 <script>
-const OWNER = 'faanzylosttt';   // ganti
+const OWNER = 'faanzylosttt'; // ganti
 const REPO  = 'faanzy-cloud';
 const PATH  = 'files';
 
 let downloadUrl = '';
 
-// Ambil daftar file
+// Load daftar file otomatis
 fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${PATH}`)
   .then(r=>r.json())
   .then(data=>{
     const rows = data.filter(f=>f.type==='file').map(f=>{
-      const kb = (f.size/1024).toFixed(1);
-      const size = kb>1024 ? (kb/1024).toFixed(2)+' MB' : kb+' KB';
-      const date = new Date(f.sha.slice(0,8) + '0'.repeat(24)).toLocaleDateString('id-ID');
+      const kb = (f.size/1024);
+      const size = kb>1024 ? (kb/1024).toFixed(2)+' MB' : kb.toFixed(1)+' KB';
+      const date = new Date().toLocaleDateString('id-ID');
       return `
         <tr>
           <td class="fileName">
@@ -105,13 +107,13 @@ fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${PATH}`)
     document.getElementById('tbody').innerHTML = rows;
   });
 
-// Tampilkan popup
 function showUnlock(url){
   downloadUrl = url;
   document.getElementById('popup').classList.remove('hidden');
 }
-// Unlock & download
 function unlockNow(){
+  // simpan status unlock di localStorage (opsional)
+  localStorage.setItem('unlocked', '1');
   document.getElementById('popup').classList.add('hidden');
   window.location.href = downloadUrl;
 }
